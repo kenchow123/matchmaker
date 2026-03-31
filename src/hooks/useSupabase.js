@@ -90,11 +90,11 @@ export function useSubmissions() {
     if (!sub) return;
     const { error } = await supabase
       .from('submissions')
-      .update({ read: !sub.read })
+      .update({ is_read: !sub.is_read })
       .eq('id', id);
     if (!error) {
       setSubs((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, read: !s.read } : s)),
+        prev.map((s) => (s.id === id ? { ...s, read: !s.is_read } : s)),
       );
     }
   };
@@ -102,7 +102,7 @@ export function useSubmissions() {
   const markAllRead = async (profileId) => {
     const { error } = await supabase
       .from('submissions')
-      .update({ read: true })
+      .update({ is_read: true })
       .eq('target', profileId);
     if (!error) {
       setSubs((prev) =>

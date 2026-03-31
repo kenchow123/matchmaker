@@ -57,7 +57,7 @@ export default function AdminPage({
   };
 
   const copyAllUnread = async (profileId) => {
-    const unread = subs.filter((s) => s.target === profileId && !s.read);
+    const unread = subs.filter((s) => s.target === profileId && !s.is_read);
     if (unread.length === 0) { onToast('全部都處理咗喇'); return; }
     await copyToClipboard(buildBulkForwardMessage(unread));
     onToast(`已複製 ${unread.length} 份！`);
@@ -65,12 +65,12 @@ export default function AdminPage({
 
   const getSubsFor = (pid) => {
     let list = subs.filter((s) => s.target === pid);
-    if (filter === 'unread') list = list.filter((s) => !s.read);
-    if (filter === 'read') list = list.filter((s) => s.read);
+    if (filter === 'unread') list = list.filter((s) => !s.is_read);
+    if (filter === 'read') list = list.filter((s) => s.is_read);
     return list.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   };
 
-  const totalUnread = subs.filter((s) => !s.read).length;
+  const totalUnread = subs.filter((s) => !s.is_read).length;
 
   if (loading) {
     return (
@@ -132,7 +132,7 @@ export default function AdminPage({
         {profiles.map((pr) => {
           const pSubs = getSubsFor(pr.id);
           const allSubs = subs.filter((s) => s.target === pr.id);
-          const unread = allSubs.filter((s) => !s.read).length;
+          const unread = allSubs.filter((s) => !s.is_read).length;
           const isOpen = expandedId === pr.id;
 
           return (

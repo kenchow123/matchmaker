@@ -11,9 +11,9 @@ export default function SubmissionCard({ submission, onToggleRead, onDelete, onT
   return (
     <div
       className={`bg-gray-50 rounded-lg p-3 mb-1.5 border border-gray-200 transition-opacity ${
-        read ? 'opacity-50' : ''
+        is_read ? 'opacity-50' : ''
       }`}
-      style={{ borderLeft: `3px solid ${read ? '#2b8a3e' : '#f06595'}` }}
+      style={{ borderLeft: `3px solid ${is_read ? '#2b8a3e' : '#f06595'}` }}
     >
       <div className="flex justify-between items-center mb-1.5">
         <div>
@@ -35,7 +35,7 @@ export default function SubmissionCard({ submission, onToggleRead, onDelete, onT
               : 'bg-brand-green text-white'
           }`}
         >
-          {read ? '↩ 未處理' : '✅ 已處理'}
+          {is_read ? '↩ 未處理' : '✅ 已處理'}
         </button>
         <button
           onClick={() => onDelete(submission.id)}
